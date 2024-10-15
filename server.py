@@ -32,6 +32,7 @@ def get_random_audio_file(directory):
 def serve_random_audio(animal):
     """Serve a random audio file from the corresponding animal's directory."""
     animal = animal.lower()
+    print("Random animal: ", animal)
     if animal not in ANIMAL_DIRS:
         abort(404, description="Animal not found")
 
