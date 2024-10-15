@@ -28,9 +28,7 @@ def get_random_audio_file(directory):
     except FileNotFoundError:
         return None
 
-@app.route('/<animal>')
 def serve_random_audio(animal):
-    """Serve a random audio file from the corresponding animal's directory."""
     animal = animal.lower()
     print("Random animal: ", animal)
     if animal not in ANIMAL_DIRS:
@@ -44,11 +42,17 @@ def serve_random_audio(animal):
     else:
         abort(404, description="No audio files found for this animal")
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
 
 @app.route('/random')
 def random_sound():
     """Serve a random audio file from any animal's directory."""
     animal = random.choice(list(ANIMAL_DIRS.keys()))
     return serve_random_audio(animal)
+
+@app.route('/specific/<animal>')
+def animal_sound(animal):
+    """Serve a random audio file from the specified animal's directory."""
+    return serve_random_audio(animal)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
